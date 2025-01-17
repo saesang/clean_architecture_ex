@@ -12,9 +12,11 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import com.example.presentation.databinding.ActivityMainHomeBinding
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class MainHomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainHomeBinding
     private val viewModel: MainHomeViewModel by viewModels()
