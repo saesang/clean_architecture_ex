@@ -1,5 +1,6 @@
 package com.example.data.repositoryImpl
 
+import com.example.data.dto.DummyData
 import com.example.data.mapper.TotalInfoMapper
 import com.example.data.retrofit.ServerApi
 import com.example.data.room.TodayFortuneDb
@@ -22,8 +23,12 @@ class TotalInfoRepositoryImpl @Inject constructor(
 
     override suspend fun fetchTotalInfo(username: String): TotalInfoData {
         // 서버 통신 관련 에러 처리 생략
-        val fortuneInfo = serverApi.fetchFortuneInfo(username).body()!!
-        val userInfo = serverApi.fetchUserInfo(username).body()!!
+//        val fortuneInfo = serverApi.fetchFortuneInfo(username).body()!!
+//        val userInfo = serverApi.fetchUserInfo(username).body()!!
+
+        // 더미 데이터로 테스트
+        val fortuneInfo = DummyData.fortuneInfoList.find { it.username == username }!!
+        val userInfo = DummyData.userInfoList.find { it.username == username }!!
 
         val totalInfoEntity = TotalInfoMapper.mapperToTotalInfoEntity(fortuneInfo, userInfo)
 
