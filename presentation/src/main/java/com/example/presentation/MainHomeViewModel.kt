@@ -32,12 +32,16 @@ class MainHomeViewModel @Inject constructor(
         }
     }
 
-    fun fetchTotalInfoData(username: String) {
+    private fun fetchTotalInfoData(username: String) {
         viewModelScope.launch {
             _totalInfoData.value = BaseState.Loading
 
             val data = fetchTotalInfoUsecase.invoke(username)
             _totalInfoData.value = BaseState.Success(data)
         }
+    }
+
+    fun setInitialState() {
+        _totalInfoData.value = BaseState.None
     }
 }
