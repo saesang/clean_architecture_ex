@@ -17,13 +17,17 @@ object TotalInfoMapper {
         )
     }
 
-    fun mapperToTotalInfoData(totalInfoEntity: TotalInfoEntity): TotalInfoData {
-        return TotalInfoData(
-            date = totalInfoEntity.date,
-            username = totalInfoEntity.username,
-            age = totalInfoEntity.age,
-            personality = totalInfoEntity.personality,
-            content = totalInfoEntity.content
-        )
+    fun mapperToTotalInfoData(totalInfoEntity: TotalInfoEntity?): TotalInfoData? {
+        return if (totalInfoEntity == null) {
+            null
+        } else {
+            TotalInfoData(
+                date = totalInfoEntity.date,
+                username = totalInfoEntity.username,
+                age = totalInfoEntity.age,
+                personality = totalInfoEntity.personality,
+                content = totalInfoEntity.content
+            )
+        }
     }
 }
