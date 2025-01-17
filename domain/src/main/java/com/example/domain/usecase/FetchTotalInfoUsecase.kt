@@ -1,9 +1,8 @@
 package com.example.domain.usecase
 
 import com.example.domain.repository.TotalInfoRepository
-import javax.inject.Inject
 
-class FetchTotalInfoUsecase @Inject constructor(
+class FetchTotalInfoUsecase(
     private val totalInfoRepository: TotalInfoRepository
 ){
     // 서버 요청
