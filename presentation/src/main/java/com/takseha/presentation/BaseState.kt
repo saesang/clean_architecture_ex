@@ -1,4 +1,4 @@
-package com.example.presentation
+package com.takseha.presentation
 
 sealed class BaseState<out T>(val data : T?)  {
     companion object {

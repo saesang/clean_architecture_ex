@@ -1,4 +1,4 @@
-package com.example.presentation
+package com.takseha.presentation
 
 import android.os.Bundle
 import android.text.Editable
@@ -11,7 +11,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
-import com.example.presentation.databinding.ActivityMainHomeBinding
+import com.example.domain.model.TotalInfoData
+import com.takseha.presentation.databinding.ActivityMainHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -42,10 +43,8 @@ class MainHomeActivity : AppCompatActivity() {
                     after: Int
                 ) {
                 }
-
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 }
-
                 override fun afterTextChanged(s: Editable?) {
                     btnSave.isEnabled = inputName.text.isNotEmpty()
                 }
@@ -53,37 +52,62 @@ class MainHomeActivity : AppCompatActivity() {
 
             // '확인' 버튼 클릭 시 운세 정보와 '뒤로가기' 버튼 나타남
             btnSave.setOnClickListener {
-                viewModel.getTotalInfoData(inputName.toString())
-                lifecycleScope.launch {
-                    viewModel.totalInfoData.collectLatest {
-                        if (it == BaseState.Error(1)) {
-                            // 에러 코드 1 인 상황 시 처리 로직
-                        } else {
-                            textFortune.text = it.data?.content
-                            textFortune.visibility = VISIBLE
-                            btnSave.visibility = GONE
-                            btnBack.visibility = VISIBLE
-                        }
-                    }
-                }
+                val username = inputName.text.toString()
+                viewModel.getTotalInfoData(username)
             }
 
             // '뒤로가기' 버튼 클릭 시 화면 초기화
             btnBack.setOnClickListener {
-                viewModel.setInitialState()
-                lifecycleScope.launch {
-                    viewModel.totalInfoData.collectLatest {
-                        if (it == BaseState.Error(1)) {
-                            // 에러 코드 1 인 상황 시 처리 로직
-                        } else {
-                            textFortune.text = it.data?.content
-                            textFortune.visibility = GONE
-                            btnSave.visibility = VISIBLE
-                            btnBack.visibility = GONE
-                        }
+                setInitialState()
+            }
+        }
+
+        observeViewModel()
+    }
+
+    private fun observeViewModel() {
+        lifecycleScope.launch {
+            viewModel.totalInfoData.collectLatest {
+                handleState(it)
+            }
+        }
+    }
+
+    private fun handleState(state: BaseState<TotalInfoData>) {
+        with(binding) {
+            when (state) {
+                is BaseState.Loading -> {
+                    // 로딩 상태 처리
+                }
+                is BaseState.Success -> {
+                    inputName.apply {
+                        isEnabled = false
+                        setText(state.data?.username)
                     }
+                    textFortune.text = state.data?.content
+                    textFortune.visibility = VISIBLE
+                    btnSave.visibility = GONE
+                    btnBack.visibility = VISIBLE
+                }
+                is BaseState.Error -> {
+                    // 에러 상태 처리
+                }
+                is BaseState.None -> {
+                    setInitialState()
                 }
             }
+        }
+    }
+
+    private fun setInitialState() {
+        with(binding) {
+            inputName.apply {
+                isEnabled = true
+                setText("")
+            }
+            textFortune.visibility = GONE
+            btnSave.visibility = VISIBLE
+            btnBack.visibility = GONE
         }
     }
 

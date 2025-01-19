@@ -1,4 +1,4 @@
-package com.example.presentation
+package com.takseha.presentation
 
 import org.junit.Test
 
