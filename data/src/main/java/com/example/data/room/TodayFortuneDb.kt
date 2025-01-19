@@ -5,7 +5,7 @@ import androidx.room.RoomDatabase
 
 @Database(
     entities = [TotalInfoEntity::class],
-    version = 1
+    version = 2
 )
 abstract class TodayFortuneDb : RoomDatabase() {
     abstract fun dao(): TodayFortuneDao
