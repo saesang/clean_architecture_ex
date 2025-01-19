@@ -55,7 +55,9 @@
         <Button
             android:id="@+id/btn_save"
             style="@style/B3_2"
-            android:layout_width="90dp"
+            android:layout_width="wrap_content"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
             android:layout_height="44dp"
             android:layout_marginTop="40dp"
             android:background="@drawable/selector_btn_enable"
@@ -67,11 +69,12 @@
         <Button
             android:id="@+id/btn_back"
             style="@style/B3_2"
-            android:layout_width="90dp"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:layout_width="wrap_content"
             android:layout_height="44dp"
             android:layout_marginTop="40dp"
             android:background="@drawable/btn_500"
-            android:enabled="false"
             android:text="@string/again_btn"
             android:textColor="@color/white"
             android:visibility="gone" />

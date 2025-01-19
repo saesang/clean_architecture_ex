@@ -1,7 +1,13 @@
 package com.example.todayfortune
 
 import android.app.Application
+import androidx.appcompat.app.AppCompatDelegate
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
-class TodayFortuneApp : Application() {}
+class TodayFortuneApp : Application() {
+    override fun onCreate() {
+        super.onCreate()
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+    }
+}
